@@ -1,5 +1,5 @@
 {
-  "name": "teach",
+  "name": "slather",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "src/server.js"
   },
-  "author": "",
+  "author": "Sam Galson",
   "license": "ISC",
   "dependencies": {
     "socket.io": "^1.4.8"

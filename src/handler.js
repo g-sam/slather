@@ -1,4 +1,4 @@
-const paths = require('../server/paths.js');
+const paths = require('./paths.js');
 
 function handler(request, response) {
   const url = request.url;

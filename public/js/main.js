@@ -60,7 +60,7 @@ function arrayify(obj){
           colour: obj[x][y].colour,
           key: `${x},${y}`  
         })
-      };
+      });
     });
    return arr;
 }
@@ -74,9 +74,9 @@ socket.on('update', (positions) => {
 
   update.exit().remove();
   update.enter().append('rect')
-    .attr('width', 6);
-    .attr('height', 6);
-    .attr('x', (d) => d.x + 3);
+    .attr('width', 6)
+    .attr('height', 6)
+    .attr('x', (d) => d.x + 3)
     .attr('y', (d) => d.y + 3);
 
   /* TESTING

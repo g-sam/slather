@@ -7,8 +7,8 @@ const {Snake, turn, kill, positions, onTick} = game;
 
 /* socket events */
 io.on('connection', (socket) => {
-  const id = socket.id
   console.log(`client ${id} connected`)
+  const id = socket.id
   new Snake(id);
   socket.on('turn', (direction) => {
     turn(id, direction);

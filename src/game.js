@@ -1,18 +1,43 @@
 const startSize = 3;
+const startApples = 150;
 const colours = ['red', 'green', 'black', 'blue', 'orange', 'green', 'purple', 'brown', 'pink'];
 const width = 1000;
 const height = 1000;
 const snakes = {};
 const positions = {};
-const moved = {}
-const toFill = [];
-const toUnfill = [];
+let moved = {}
+let collisions = [];
+
+generateApples(startApples);
 
 function onTick() {
-  Object.keys(snakes).forEach(id){
+  Object.keys(snakes).forEach((id) => {
    snakes[id].move();
-  }
+  });
   moved = {};
+  collisions = [];
+}
+
+function checkCollisions(snake){
+
+}
+
+function generateApples(total){
+  const applePositions = [];
+  const apple = {
+    apple: true,
+    colour: 'darkgreen',
+  };
+  for (let i = 0; i < total; i++){
+    let x;
+    let y;
+    do {
+      x = Math.floor(Math.random()*width);
+      y = Math.floor(Math.random()*height);
+    } while (isFull(x, y))
+    applePositions.push([x, y]);
+  }
+  fill(applePositions, apple);
 }
 
 function turn(id, direction){
@@ -51,10 +76,13 @@ function getStart() {
 }
 
 /* add new occupied positions */
-function fill(bits, snake) {
-  this.bits.forEach((bit) => {
+function fill(bits, obj) {
+  bits.forEach((bit) => {
     const [x, y] = bit;
-    positions[x][y] = snake;
+    if (!positions.hasOwnProperty(x)){
+      positions[x] = {};
+    }
+    positions[x][y] = obj;
   });
 }
 
@@ -78,32 +106,51 @@ function isFull(x, y) {
 
 /*  remove snake */
 function kill(id){
+  console.log(snakes)
   snakes[id].bits.forEach(unFill);
   delete snakes[id];
 }
 
+function pop(snake){
+  const [x, y] = snake.head;
+  if (isFull(x, y) && positions[x][y]['apple']){
+    snake.grow();
+  } else {
+    const popped = snake.bits.pop();
+    unFill(popped);
+  }
+}
+
+function unshift(snake){
+  const [x, y] = snake.head;
+  if(isFull(x, y)){
+    kill(snake.id);
+  } else {
+    snake.bits.unshift([x, y]);
+    fill([snake.head], snake);
+  }
+}
 /* Snake constructor function */
 function Snake(id) {
   snakes[id] = this;
+  this.id = id;
   this.colour = colours[Math.floor(Math.random()*8)];
   this.size = startSize;
   this.direction = 'up';
   this.head = getStart();
   this.bits = [
-    [this.head[0], this.head[1],
+    [this.head[0], this.head[1]],
     [this.head[0], this.head[1] - 1],
     [this.head[0], this.head[1] - 2]
   ];
-  fill(bits);
+  fill(this.bits, this);
   this.move = () => {
-    if(this.direction === 'up') this.head[1] += 1;
+    if(this.direction === 'down') this.head[1] += 1;
     if(this.direction === 'right') this.head[0] += 1;
-    if(this.direction === 'down') this.head[1] -= 1;
+    if(this.direction === 'up') this.head[1] -= 1;
     if(this.direction === 'left') this.head[0] -= 1;
-    const popped = this.bits.pop();
-    this.bits.unshift([this.head[0], this.head[1]]);
-    fill(this.head);
-    unFill(popped);
+    pop(this);  
+    unshift(this);
   }
   this.grow = (n) => {this.size += n};
 }

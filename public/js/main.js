@@ -3,44 +3,9 @@ const clientID = Date.now();
 const oldPositions = {};
 
 
-function filter(positions){
-  const additions = []
-  Object.keys(positions).forEach((x)=>{
-    Object.keys(positions[x]).forEach((y)=>{
-      if(!oldPositions[x][y]){
-        additions.push({
-          x,
-          y,
-          colour: positions[x][y].colour  
-        })
-      };
-    })
-  })
-  const removals = []
-  Object.keys(oldPositions).forEach((x)=>{
-    Object.keys(oldPositions[x]).forEach((y)=>{
-      if(!positions[x][y]){
-        removals.push({
-          x,
-          y,
-        })
-      };
-    })
-  })
-  return [additions, removals];
-}
-
-function clone(positions){
-  const out = {};
-  Object.keys(positions).forEach((x)=>{
-    Object.keys(positions[x]).forEach((y)=>{
-      out[x][y] = positions[x][y];
-    })
-  })
-  return out;
-}
-
+/* listen for arrow keys */
 document.body.addEventListener('keydown', function (e) {
+  e.preventDefault();
   const directions = {
     37: 'left',
     38: 'up',
@@ -50,6 +15,7 @@ document.body.addEventListener('keydown', function (e) {
   socket.emit('turn', directions[e.keyCode]);
 });
 
+/* map positions object to array for binding to d3 selection */
 function arrayify(obj){
   const arr = [];
    Object.keys(obj).forEach((x)=> {
@@ -58,15 +24,15 @@ function arrayify(obj){
           x,
           y,
           colour: obj[x][y].colour,
-          key: `${x},${y}`  
+          key: `${x},${y}`, 
         })
       });
     });
    return arr;
 }
 
+/* update svg display */
 socket.on('update', (positions) => {
-
   const data = arrayify(positions);
   const update = d3.select('.frame')
     .selectAll('rect')
@@ -76,40 +42,7 @@ socket.on('update', (positions) => {
   update.enter().append('rect')
     .attr('width', 6)
     .attr('height', 6)
-    .attr('x', (d) => d.x + 3)
-    .attr('y', (d) => d.y + 3);
-
-  /* TESTING
-     const [additions, removals] = filter(positions);
-     d3.select('.frame')
-     .selectAll('rect')
-     .data(additions)
-     .enter()
-     .append('rect')
-     .attr('width', 6);
-     .attr('height', 6);
-     .attr('x', (d) => {
-     return d.x + 3;
-     });
-     .attr('y', (d) => {
-     return d.y + 3;
-     });
-     .attr('fill', (d) => {
-     return d.colour;
-     });
-     d3.select('.frame')
-     .data(removals)
-     .attr('width', 6);
-     .attr('height', 6);
-     .attr('x', (d) => {
-     return d.x + 3;
-     });
-     .attr('y', (d) => {
-     return d.y + 3;
-     });
-     .attr('fill', (d) => {
-     return d.colour;
-     });
-     oldPositions = positions;
-     */
-})
+    .attr('x', (d) => Number(d.x) + 3)
+    .attr('y', (d) => Number(d.y) + 3)
+    .attr('fill', (d) => d.colour);
+});

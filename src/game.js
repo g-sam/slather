@@ -1,5 +1,5 @@
 const startSize = 3;
-const startApples = 2000;
+const startApples = 5000;
 const colours = ['red', 'black', 'blue', 'orange', 'purple', 'brown', 'pink'];
 const width = 1000;
 const height = 1000;

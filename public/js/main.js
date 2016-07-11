@@ -67,8 +67,8 @@ function setViewBoxBasedOnCenter(data){
 
 function setViewBox(data){
   const snake = data.snakes[`/#${socket.id}`];
-  const VBwidth = Math.floor(data.width / 6);
-  const VBheight = Math.floor(data.height / 6);
+  const VBwidth = Math.floor(data.width / 10);
+  const VBheight = Math.floor(data.height / 10);
   let VBx = snake.head[0] - VBwidth / 2;
   let VBy = snake.head[1] - VBheight / 2;
   if (VBx < 0) VBx = 0;

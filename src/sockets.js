@@ -22,5 +22,5 @@ io.on('connection', (socket) => {
 const ticker = setInterval(() => {
   onTick();
   io.emit('update', data)
-}, 50);
+}, 150);
 

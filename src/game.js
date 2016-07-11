@@ -1,8 +1,8 @@
 const startSize = 3;
 const startApples = 5000;
 const colours = ['red', 'black', 'blue', 'orange', 'purple', 'brown', 'pink'];
-const width = 1000;
-const height = 1000;
+const width = 50;
+const height = 50;
 const snakes = {};
 const positions = {};
 const data = {

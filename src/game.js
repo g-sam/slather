@@ -1,8 +1,8 @@
 const startSize = 3;
-const startApples = 5000;
+const width = 100;
+const height = 100;
+const startApples = ((width+height) / 2) * 5;
 const colours = ['red', 'black', 'blue', 'orange', 'purple', 'brown', 'pink'];
-const width = 1000;
-const height = 1000;
 const snakes = {};
 const positions = {};
 const data = {
@@ -170,7 +170,7 @@ function unshift(snake){
   const [x, y] = snake.head;
   if(isFull(x, y) && !positions[x][y].hasOwnProperty('apple')){
     collisions.push(snake.id);
-  } else if (x < 0 || y < 0 || x > 1000 || y > 1000) {
+  } else if (x < 0 || y < 0 || x > width || y > height) {
     collisions.push(snake.id);
   } else {
     snake.bits.unshift([x, y]);

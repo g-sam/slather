@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon ./index.js"
+    "start": "node ./index.js"
+  },
+  "engines": {
+    "node": "6.2.1"
   },
   "author": "Sam Galson",
   "license": "ISC",

@@ -2,7 +2,7 @@ const game = require('./game.js');
 const server = require('./server.js');
 const io = require('socket.io')(server);
 
-const {Snake, turn, kill, positions, onTick} = game;
+const {Snake, turn, kill, data, onTick} = game;
 
 
 /* socket events */
@@ -14,13 +14,13 @@ io.on('connection', (socket) => {
     turn(id, direction);
   });
   socket.on('disconnect', () => {
-    kill(id)
+    kill(id, true);
     console.log(`client ${id} disconnected`)
   });
 });
 
 const ticker = setInterval(() => {
   onTick();
-  io.emit('update', positions)
-}, 100);
+  io.emit('update', data)
+}, 50);
 

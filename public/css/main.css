@@ -1,0 +1,19 @@
+svg {
+  display: block;
+  border: 2px solid black;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+h1 {
+  position: absolute;
+  top: 5px;
+  left: 15px;
+}
+body {
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}

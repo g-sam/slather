@@ -158,7 +158,12 @@ function pop(snake){
   const [x, y] = snake.head;
   if (isFull(x, y) && positions[x][y].hasOwnProperty('apple')){
     snake.grow(1);
-    applesToAdd++;
+    if (positions[x][y].hasOwnProperty('timeLeft')){
+      const key = `${x},${y}`;
+      delete timedApples[key];  
+    } else {
+      applesToAdd++;
+    }
   } else {
     const popped = snake.bits.pop();
     unFill(popped);

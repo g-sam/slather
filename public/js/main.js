@@ -49,32 +49,16 @@ function getSnakeBB(snake){
   };
 }
 
-/* not used: does not appear smooth */
-function setViewBoxBasedOnCenter(data){
-  const snake = data.snakes[`/#${socket.id}`];
-  const snakeBB = getSnakeBB(snake);
-  const VBwidth = Math.floor(data.width / 6);
-  const VBheight = Math.floor(data.height / 6);
-  let VBx = snakeBB.center.x - VBwidth / 2;
-  let VBy = snakeBB.center.y - VBheight / 2;
-  if (VBx < 0) VBx = 0;
-  if (VBy < 0) VBy = 0;
-  if (VBx + VBwidth > 1000) VBx = data.width - VBwidth;
-  if (VBy + VBheight > 1000) VBy = data.height - VBheight;
-  const string = `${VBx} ${VBy} ${VBwidth} ${VBheight}`
-  d3.select('.frame').attr('viewBox', string);
-}
-
 function setViewBox(data){
   const snake = data.snakes[`/#${socket.id}`];
-  const VBwidth = Math.floor(data.width / 2);
-  const VBheight = Math.floor(data.height / 2);
+  const VBwidth = 75;
+  const VBheight = 75;;
   let VBx = snake.head[0] - VBwidth / 2;
   let VBy = snake.head[1] - VBheight / 2;
   if (VBx < 0) VBx = 0;
   if (VBy < 0) VBy = 0;
-  if (VBx + VBwidth > 1000) VBx = data.width - VBwidth;
-  if (VBy + VBheight > 1000) VBy = data.height - VBheight;
+  if (VBx + VBwidth > data.width) VBx = data.width - VBwidth;
+  if (VBy + VBheight > data.height) VBy = data.height - VBheight;
   const string = `${VBx} ${VBy} ${VBwidth} ${VBheight}`
   d3.select('.frame').attr('viewBox', string);
 }

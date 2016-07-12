@@ -1,6 +1,9 @@
 # Slither 2.0: SLATHER (slither farther)
 
-## Controls
-Left, Right, Up, Down
+## What?
+A multiplayer snake game built with sockets.io.
 
-##[Interactive multiplayer hosted on Heroku](https://agile-forest-37167.herokuapp.com/)
+## How to play
+Steer with Left, Right, Up, Down. Eat apples. Do not crash into a wall, yourself, or another snake.
+
+####[Play here](https://agile-forest-37167.herokuapp.com/)
